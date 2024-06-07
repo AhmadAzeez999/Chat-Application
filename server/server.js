@@ -9,7 +9,11 @@ require("dotenv").config();
 const userRoute = require("./routes/userRoute.js");
 
 app.use(express.json()); // Receive and send json data
-app.use(cors());
+app.use(cors(
+{
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
 
 app.get("/", (req, res) =>
 {

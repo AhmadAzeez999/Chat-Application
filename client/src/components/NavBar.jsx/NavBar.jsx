@@ -8,6 +8,7 @@ const NavBar = () =>
         <h2>
             <Link to="/" className='logo'>ChatApp</Link>
         </h2>
+        <span className='text-warning'>Logged in as Ahmad</span>
         <div className="navlist">
             <ul>
                 <li><Link to="/login">Login</Link></li>

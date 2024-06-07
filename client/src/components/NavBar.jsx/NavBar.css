@@ -1,13 +1,49 @@
 .navbar
 {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 70%;
+    background-color: #101010;
+    align-items: center;
+    padding: 0px 200px;
 }
 
 .logo
 {
     text-decoration: none;
     color: inherit;
+}
+
+.navlist
+{
+    display: flex;
+    list-style: none;
+}
+
+.navlist ul
+{
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.navlist a
+{
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.text-warning
+{
+    color: beige;
+    flex-grow: 1;
+    text-align: center;
+}
+
+@media screen and (max-width: 1020px) 
+{
+    .navbar
+    {
+        padding: 0px 80px;
+    }
 }

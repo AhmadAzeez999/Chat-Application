@@ -1,7 +1,9 @@
+import './css/Chat.css';
+
 const Chat = () => 
 {
     return ( 
-        <div className="chat">
+        <div className='chat'>
             Chat
         </div> 
     );
