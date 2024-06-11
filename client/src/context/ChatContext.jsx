@@ -213,27 +213,6 @@ export const ChatContextProvider = ({ children, user }) =>
         setTextMessage(""); // Clearing input
     }, []);
 
-    // For sending voice recordings
-    // const sendVoiceMessage = useCallback(async (blob, sender, currentChatId) => 
-    // {
-    //     const response = await postRequest(`${baseUrl}/messages`,
-    //     JSON.stringify(
-    //     {
-    //         chatId: currentChatId,
-    //         senderId: sender._id,
-    //         blob
-    //     }
-    //     ));
-
-    //     if (response.error) 
-    //     {
-    //         return console.log("Error sending voice message:", response);
-    //     }
-
-    //     setNewMessage(response);
-    //     setMessages((prev) => [...prev, response]);
-    // }, []);
-
     const updateCurrentChat = useCallback((chat) =>
     {
         setCurrentChat(chat);
@@ -343,7 +322,6 @@ export const ChatContextProvider = ({ children, user }) =>
             markAllNotificationsAsRead,
             markNotificationAsRead,
             markThisUserNotificationsAsRead,
-            // sendVoiceMessage,
         }}
         >
             {children}
