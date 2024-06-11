@@ -1,0 +1,69 @@
+.userchat 
+{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.userchat:hover 
+{
+    opacity: 80%;
+}
+
+.userchat img 
+{
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.text-content 
+{
+    flex-grow: 1;
+}
+
+.name 
+{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.text 
+{
+    color: #666;
+    font-size: 14px;
+    text-overflow: ellipsis;
+}
+
+.date 
+{
+    color: #999;
+    font-size: 0.8em;
+}
+
+.this-user-notifications 
+{
+    background-color: #357ab8;
+    color: white;
+    padding: 5px 5px;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    font-size: 0.8em;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 60%;
+}
+
+.userchat .user-online 
+{
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #00ff00;
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-left: 90%;
+}

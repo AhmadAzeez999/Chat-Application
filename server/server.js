@@ -2,11 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const port = process.env.PORT || 5000;
+const path = require("path");
 
 const app = express();
 require("dotenv").config();
 
 const userRoute = require("./routes/userRoute.js");
+const chatRoute = require("./routes/chatRoute.js");
+const messageRoute = require("./routes/messageRoute.js");
 
 app.use(express.json()); // Receive and send json data
 app.use(cors(
@@ -21,6 +24,8 @@ app.get("/", (req, res) =>
 });
 
 app.use("/api/users", userRoute);
+app.use("/api/chats", chatRoute);
+app.use("/api/messages", messageRoute);
 
 mongoose.connect(process.env.DB_URI).then(() =>
 {

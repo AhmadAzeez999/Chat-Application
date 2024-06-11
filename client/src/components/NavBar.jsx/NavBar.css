@@ -40,6 +40,14 @@
     text-align: center;
 }
 
+.navbar-buttons
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
 @media screen and (max-width: 1020px) 
 {
     .navbar

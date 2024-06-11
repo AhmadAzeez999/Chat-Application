@@ -1,0 +1,105 @@
+.notifications 
+{
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-count 
+{
+    background-color: hsl(208, 55%, 46%);
+    border-radius: 50%;
+    color: white;
+    padding: 1px 8px;
+    font-size: 12px;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+}
+
+.notifications-box 
+{
+    position: absolute;
+    padding: 20px;
+    top: 30px;
+    right: 0;
+    width: 300px;
+    max-height: 400px;
+    background-color: #101010;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.notifications-box.open 
+{
+    display: block;
+    animation: openAnimation 0.3s forwards;
+}
+
+.notifications-box.closing 
+{
+    animation: closeAnimation 0.3s forwards;
+}
+
+.notifications-header 
+{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification 
+{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.notification.not-read 
+{
+    background-color: #f9f9f94c;
+}
+
+.notification-time 
+{
+    display: block;
+    font-size: 12px;
+    color: gray;
+    margin-top: 5px;
+}
+
+.mark-as-read:hover
+{
+    background-color: #f9f9f94c;
+    cursor: pointer;
+}
+
+@keyframes openAnimation 
+{
+    from 
+    {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to 
+    {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes closeAnimation 
+{
+    from 
+    {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to 
+    {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
