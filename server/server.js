@@ -27,6 +27,9 @@ app.use("/api/users", userRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
+// Creating upload endpoint for voice notes
+app.use('/vn', express.static('uploads/vn'));
+
 mongoose.connect(process.env.DB_URI).then(() =>
 {
     console.log("MongoDB connection established");

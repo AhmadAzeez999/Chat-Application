@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-import { baseUrl, getRequest, postRequest } from "../utils/services";
+import { baseUrl, getRequest, postFileRequest, postRequest } from "../utils/services";
 import { io } from "socket.io-client";
 
 export const ChatContext = createContext();
@@ -22,7 +22,9 @@ export const ChatContextProvider = ({ children, user }) =>
     const [notifications, setNotifications] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
 
-    console.log("Notifs: ", notifications);
+    const [tempSenderId, setTempSenderId] = useState(null);
+    const [tempUser, setTempUser] = useState(null);
+
 
     // Initial socket
     useEffect(() =>
@@ -161,6 +163,7 @@ export const ChatContextProvider = ({ children, user }) =>
                 }
 
                 setUserChats(response);
+                console.log("User chats: ", response);
             }
         }
 
@@ -211,6 +214,30 @@ export const ChatContextProvider = ({ children, user }) =>
         setNewMessage(response);
         setMessages((prev) => [...prev, response]);
         setTextMessage(""); // Clearing input
+    }, []);
+
+    // For sending voice recordings
+    const sendVoiceMessage = useCallback(async (audioBlob, sender, currentChatId) => 
+    {
+        const formData = new FormData();
+
+        console.log("Audio blob: ", audioBlob);
+
+        formData.append('chatId', currentChatId);
+        formData.append('senderId', sender._id);
+        formData.append('voiceNote', audioBlob);
+
+        console.log("Form data: ", formData);
+
+        const response = await postFileRequest(`${baseUrl}/messages/upload-voice`, formData);
+
+        if (response.error)
+        {
+            return console.log("Error sending voice message:", response);
+        }
+
+        setNewMessage(response);
+        setMessages((prev) => [...prev, response]);
     }, []);
 
     const updateCurrentChat = useCallback((chat) =>
@@ -300,7 +327,47 @@ export const ChatContextProvider = ({ children, user }) =>
         });
 
         setNotifications(mNotifications);
-    })
+    });
+
+    const goToDesiredChat = useCallback((senderId, user) => 
+    {
+        console.log("Here");
+
+        setTempSenderId(senderId);
+        setTempUser(user);
+
+        console.log(userChats)
+        
+        if (!userChats)
+            return;
+
+        console.log("And here?");
+
+
+        // Find chat to open
+        const desiredChat = userChats.find((chat) => 
+        {
+            const chatMembers = [user._id, senderId];
+            const isDesiredChat = chat?.members.every((member) =>
+            {
+                return chatMembers.includes(member);
+            });
+
+            return isDesiredChat;
+        });
+
+        updateCurrentChat(desiredChat);
+    }, [userChats]);
+
+    useEffect(() =>
+    {
+        if (userChats && tempSenderId && tempUser)
+        {
+            goToDesiredChat(tempSenderId, tempUser);
+            setTempSenderId(null);
+            setTempUser(null);
+        }
+    }, [userChats]);
 
     return(
         <ChatContext.Provider value=
@@ -322,6 +389,9 @@ export const ChatContextProvider = ({ children, user }) =>
             markAllNotificationsAsRead,
             markNotificationAsRead,
             markThisUserNotificationsAsRead,
+            sendVoiceMessage,
+            socket,
+            goToDesiredChat,
         }}
         >
             {children}

@@ -23,9 +23,6 @@ const Chat = () => {
                     </div>
                     <div className='chatbox'>
                         <ChatBox/>
-                        <div className="messages-box">
-                            {/* This section will display messages of the selected chat */}
-                        </div>
                     </div>
                 </div>
             ) : (

@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const messageModel = require("../models/messageModel.js");
+const port = process.env.PORT || 5000;
 
 const createMessage = async (req, res) =>
 {
@@ -10,7 +11,9 @@ const createMessage = async (req, res) =>
 
         const message = new messageModel(
         {
-            chatId, senderId, text
+            chatId, 
+            senderId, 
+            text,
         });
 
         const response = await message.save();
@@ -41,9 +44,34 @@ const getMessages = async (req, res) =>
     }
 };
 
+const uploadVoiceNote = async (req, res) => 
+{
+    try 
+    {
+        const { chatId, senderId } = req.body;
+        const voiceNoteUrl = req.file.path;
+
+        const message = new messageModel(
+        {
+            chatId,
+            senderId,
+            voiceNoteUrl: `http://localhost:${port}/vn/${req.file.filename}`
+        });
+
+        const response = await message.save();
+
+        res.status(200).json(response);
+    } 
+    catch (error) 
+    {
+        console.log(error);
+        res.status(500).json(error);
+    }
+};
+
 module.exports =
 {
     createMessage,
     getMessages,
-    //uploadVoiceNote,
+    uploadVoiceNote,
 }

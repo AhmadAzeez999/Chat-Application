@@ -30,6 +30,18 @@ const Notification = () =>
         }
     });
 
+    const renderNotificationMessage = (notification) =>
+    {
+        if (notification.type === "message")
+        {
+            return <span>{`${notification.senderName} sent you a new message.`}</span>
+        }
+        else if (notification.type === "call")
+        {
+            return <span>{`${notification.senderName} called you.`}</span>
+        }
+    }
+
     return ( 
         <div className="notifications" onClick={() => setIsOpen(!isOpen)}>
             <FaBell 
@@ -69,7 +81,7 @@ const Notification = () =>
                                 markNotificationAsRead(n, userChats, user, notifications);
                             }}
                         >
-                            <span>{`${n.senderName} sent you a new message.`}</span>
+                            {renderNotificationMessage(n)}
                             <span className="notification-time">{moment(n.date).calendar()}</span>
                         </div>
                     )
