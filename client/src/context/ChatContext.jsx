@@ -213,7 +213,9 @@ export const ChatContextProvider = ({ children, user }) =>
         
         setNewMessage(response);
         setMessages((prev) => [...prev, response]);
-        setTextMessage(""); // Clearing input
+
+        if (setTextMessage)
+            setTextMessage(""); // Clearing input
     }, []);
 
     // For sending voice recordings

@@ -15,7 +15,6 @@ export const CallContextProvider = ({ children, user }) =>
     const [caller, setCaller] = useState("");
     const [receiver, setReceiver] = useState("");
     const [senderName, setSenderName] = useState("");
-    const [receiverName, setReceiverName] = useState("");
     const [me, setMe] = useState("");
     const [callType, setCallType] = useState("");
     const [isScreenSharing, setIsScreenSharing] = useState(false);
@@ -78,7 +77,7 @@ export const CallContextProvider = ({ children, user }) =>
         setCallerSignal(null);
         if (connectionRef.current) 
         {
-            connectionRef.current.destroy();
+            //connectionRef.current.destroy();
         }
         if (streamRef.current) 
         {
@@ -96,8 +95,6 @@ export const CallContextProvider = ({ children, user }) =>
     {
         if (socket === null)
             return;
-
-        streamRef.current = stream;
 
         const peer = new Peer(
         {
@@ -122,12 +119,14 @@ export const CallContextProvider = ({ children, user }) =>
 
         peer.on("stream", (stream) => 
         {
-            receiverVideoRef.current.srcObject = stream;
+            if (receiverVideoRef)
+                receiverVideoRef.current.srcObject = stream;
         });
 
         socket.on("callAccepted", (signal) =>
         {
             console.log("Call accepted");
+            streamRef.current = stream;
             setCallAccepted(true);
             peer.signal(signal);
 
@@ -136,7 +135,8 @@ export const CallContextProvider = ({ children, user }) =>
                 receiverVideoRef.current.srcObject = stream;
             });
 
-            senderVideoRef.current.srcObject = stream;
+            if (senderVideoRef && senderVideoRef.current)
+                senderVideoRef.current.srcObject = stream;
         });
 
         connectionRef.current = peer;

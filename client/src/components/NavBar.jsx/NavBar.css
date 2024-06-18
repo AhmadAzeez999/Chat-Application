@@ -1,4 +1,4 @@
-.navbar
+.navbar 
 {
     display: flex;
     background-color: #101010;
@@ -6,19 +6,21 @@
     padding: 0px 200px;
 }
 
-.logo
+.logo 
 {
     text-decoration: none;
     color: inherit;
 }
 
-.navlist
+.navlist 
 {
     display: flex;
     list-style: none;
+    flex-grow: 1;
+    justify-content: flex-end;
 }
 
-.navlist ul
+.navlist ul 
 {
     list-style: none;
     display: flex;
@@ -27,30 +29,66 @@
     padding: 0;
 }
 
-.navlist a
+.navlist a 
 {
     color: aliceblue;
     text-decoration: none;
 }
 
-.text-warning
-{
-    color: beige;
-    flex-grow: 1;
-    text-align: center;
-}
-
-.navbar-buttons
+.navbar-buttons 
 {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 20px;
+}
+
+.profile-container 
+{
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.profile-picture 
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.hover-box 
+{
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #101010;
+    color: aliceblue;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 1;
+}
+
+.hover-box a 
+{
+    color: aliceblue;
+    text-decoration: none;
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px aliceblue;
+}
+
+.hover-box a:hover
+{
+    background-color: #3a3a3a;
 }
 
 @media screen and (max-width: 1020px) 
 {
-    .navbar
+    .navbar 
     {
         padding: 0px 80px;
     }

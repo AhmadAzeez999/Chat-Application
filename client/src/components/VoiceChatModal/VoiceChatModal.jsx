@@ -7,11 +7,12 @@ import { IoCall } from "react-icons/io5";
 import { CallContext } from '../../context/CallContext';
 import { AuthContext } from '../../context/AuthContext';
 import { ChatContext } from '../../context/ChatContext';
+import { FaMicrophone } from "react-icons/fa";
 
-const VoiceChatModal = ({ onClose, isSender }) => 
+const VoiceChatModal = ({ onClose, isSender, recipientName }) => 
 {
     const { user } = useContext(AuthContext);
-    const { callUser, answerCall, receivingCall, callAccepted, callEnded, declineCall, leaveCall, name } = useContext(CallContext);
+    const { callUser, answerCall, receivingCall, callAccepted, callEnded, declineCall, leaveCall, senderName } = useContext(CallContext);
     const { currentChat, sendTextMessage } = useContext(ChatContext);
     const [stream, setStream] = useState(null);
     const [streamIsReady, setStreamIsReady] = useState(false);
@@ -94,36 +95,37 @@ const VoiceChatModal = ({ onClose, isSender }) =>
         <div className="voice-chat-modal-overlay">
         <div className="voice-chat-modal">
             <div className="modal-header">
-            <h3>{name && !user ? name : "Voice calling..."}</h3>
+                <h3>Voice call</h3>
             </div>
             <div className="modal-body">
-            <img src={avatar} alt="Avatar" height="100px" />
-            <p>Calling...</p>
+                <img src={avatar} alt="Avatar" height="100px" />
+                <p>{isSender && !callAccepted ? `Calling ${recipientName}...` : `${recipientName}`}</p>
+                <p>{callAccepted ? 'Connected' : ''}</p>
             </div>
             <div className="modal-footer">
             {receivingCall && !callAccepted ? (
                 <div className='incoming-call'>
-                <p>Incoming call...</p>
-                <div className='incoming-call-buttons'>
-                    <button
-                        className="control-button answer-call"
-                        onClick={() => answerCall(stream, receiverAudioRef)}
-                        >
-                        <IoCall />
-                    </button>
-                    <button className="control-button end-call" onClick={handleDeclineCall}>
-                        <FcEndCall />
-                    </button>
-                </div>
+                    <p>Incoming call...</p>
+                    <div className='incoming-call-buttons'>
+                        <button
+                            className="control-button answer-call"
+                            onClick={() => answerCall(stream, receiverAudioRef)}
+                            >
+                            <IoCall />
+                        </button>
+                        <button className="control-button end-call" onClick={handleDeclineCall}>
+                            <FcEndCall />
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <div className='call-buttons'>
-                <button className="control-button" onClick={handleMute}>
-                    {isMuted ? 'unmute' : <BsFillMicMuteFill />}
-                </button>
-                <button className="control-button end-call" onClick={handleEndCall}>
-                    <FcEndCall />
-                </button>
+                    <button className="control-button" onClick={handleMute}>
+                        {isMuted ? <FaMicrophone/> : <BsFillMicMuteFill />}
+                    </button>
+                    <button className="control-button end-call" onClick={handleEndCall}>
+                        <FcEndCall />
+                    </button>
                 </div>
             )}
             </div>

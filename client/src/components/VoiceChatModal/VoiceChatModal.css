@@ -52,11 +52,16 @@
 
 .modal-body 
 {
-    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+
+.modal-body p
+{
+    padding-right: 20px;
 }
 
 .modal-footer 
@@ -104,4 +109,11 @@
 .modal-footer .end-call:hover 
 {
     background-color: #c8233337;
+}
+
+.modal-footer .call-buttons
+{
+    display: flex;
+    justify-content: space-around;
+    gap: 80px;
 }

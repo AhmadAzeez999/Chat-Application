@@ -166,14 +166,14 @@ const ChatBox = () =>
                     <button onClick={handleOpenVideoCallModal}>
                         <FaVideo/>
                     </button>
-                    {isVideoCallModalOpen && <VideoChatModal onClose={handleCloseVideoCallModal} isSender={true}/>}
-                    {videoCallReceived && <VideoChatModal onClose={handleCloseVideoCallModal} isSender={false}/>}
+                    {isVideoCallModalOpen && <VideoChatModal onClose={handleCloseVideoCallModal} isSender={true} recipientName={recipientUser?.name}/>}
+                    {videoCallReceived && <VideoChatModal onClose={handleCloseVideoCallModal} isSender={false} recipientName={recipientUser?.name}/>}
 
                     <button onClick={handleOpenVoiceCallModal}>
                         <IoCall/>
                     </button>
-                    {isVoiceCallModalOpen && <VoiceChatModal onClose={handleCloseVoiceCallModal} isSender={true}/>}
-                    {voiceCallReceived && <VoiceChatModal onClose={handleCloseVoiceCallModal} isSender={false}/>}
+                    {isVoiceCallModalOpen && <VoiceChatModal onClose={handleCloseVoiceCallModal} isSender={true} recipientName={recipientUser?.name}/>}
+                    {voiceCallReceived && <VoiceChatModal onClose={handleCloseVoiceCallModal} isSender={false} recipientName={recipientUser?.name}/>}
 
                     <button onClick={toggleSearchBox}>
                         <IoSearch/>

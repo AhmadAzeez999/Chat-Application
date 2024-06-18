@@ -13,7 +13,7 @@ import { TbScreenShareOff } from "react-icons/tb";
 import { FaMicrophone } from "react-icons/fa";
 import { FaCamera } from "react-icons/fa";
 
-const VideoChatModal = ({ onClose, isSender }) => 
+const VideoChatModal = ({ onClose, isSender, recipientName }) => 
 {
     const { user } = useContext(AuthContext);
     const { callUser, answerCall, receivingCall, callAccepted, callEnded, 
