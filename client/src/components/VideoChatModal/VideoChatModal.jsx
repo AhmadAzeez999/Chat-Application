@@ -10,12 +10,14 @@ import { CallContext } from '../../context/CallContext';
 import { AuthContext } from '../../context/AuthContext';
 import { TbScreenShare } from "react-icons/tb";
 import { TbScreenShareOff } from "react-icons/tb";
-
+import { FaMicrophone } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 
 const VideoChatModal = ({ onClose, isSender }) => 
 {
     const { user } = useContext(AuthContext);
-    const { callUser, answerCall, receivingCall, callAccepted, callEnded, declineCall, leaveCall, name, setCallEnded } = useContext(CallContext);
+    const { callUser, answerCall, receivingCall, callAccepted, callEnded, 
+        declineCall, leaveCall, name, setCallEnded, handleScreenSharing, isScreenSharing } = useContext(CallContext);
     const { currentChat, sendTextMessage } = useContext(ChatContext);
     const [textMessage, setTextMessage] = useState("");
 
@@ -23,10 +25,10 @@ const VideoChatModal = ({ onClose, isSender }) =>
     const [isCameraOn, setIsCameraOn] = useState(true);
     const [stream, setStream] = useState();
     const [streamIsReady, setStreamIsReady] = useState(false);
+    const [originalVideoTrack, setOriginalVideoTrack] = useState(null);
 
     const senderVideoRef = useRef(null);
     const receiverVideoRef = useRef(null);
-    const senders = useRef([]);
 
     useEffect(() =>
     {
@@ -44,7 +46,7 @@ const VideoChatModal = ({ onClose, isSender }) =>
 
             setStreamIsReady(true);
             
-            callUser(recipientId, stream, "video", receiverVideoRef);
+            callUser(recipientId, stream, "video", receiverVideoRef, senderVideoRef);
             sendTextMessage("Video called", user, currentChat._id, setTextMessage);
         }
 
@@ -64,15 +66,51 @@ const VideoChatModal = ({ onClose, isSender }) =>
         }
     }, [callEnded]);
 
+    useEffect(() =>
+    {
+        if (senderVideoRef.current.srcObject === null)
+            return;
+
+        if (isScreenSharing)
+        {
+            setIsCameraOn(false);
+            if (senderVideoRef.current) 
+            {
+                senderVideoRef.current.srcObject.getTracks().forEach(track => 
+                {
+                    if (track.kind === 'video') 
+                    {
+                        track.enabled = false;
+                    }
+                });
+            }
+        }
+        else
+        {
+            setIsCameraOn(true);
+            if (senderVideoRef.current) 
+            {
+                senderVideoRef.current.srcObject.getTracks().forEach(track => 
+                {
+                    if (track.kind === 'video') 
+                    {
+                        track.enabled = true;
+                    }
+                });
+            }
+        }
+    }, [isScreenSharing]);
+
     const handleStreamRender = async () =>
     {
-        await navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => 
-        {
-            setStream(stream);
+        const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        setOriginalVideoTrack(mediaStream.getVideoTracks()[0]);
+        setStream(mediaStream);
 
-            if (senderVideoRef.current) 
-                senderVideoRef.current.srcObject = stream;
-        });
+        if (senderVideoRef.current) 
+        {
+            senderVideoRef.current.srcObject = mediaStream;
+        }
 
         if (!isSender)
             setStreamIsReady(true);
@@ -93,7 +131,8 @@ const VideoChatModal = ({ onClose, isSender }) =>
     const handleCamera = () => 
     {
         setIsCameraOn(!isCameraOn);
-        if (senderVideoRef.current) {
+        if (senderVideoRef.current) 
+        {
             senderVideoRef.current.srcObject.getTracks().forEach(track => 
             {
                 if (track.kind === 'video') 
@@ -131,10 +170,10 @@ const VideoChatModal = ({ onClose, isSender }) =>
                     </div>
                     <div className="sender-controls">
                         <button onClick={handleMute}>
-                            {isMuted ? 'unmute' : <BsFillMicMuteFill/>}
+                            {isMuted ? <FaMicrophone /> : <BsFillMicMuteFill/>}
                         </button>
                         <button onClick={handleCamera}>
-                            {isCameraOn ? <LuCameraOff/> : 'Show Camera'}
+                            {isCameraOn ? <LuCameraOff/> : <FaCamera />}
                         </button>
                     </div>
 
@@ -144,7 +183,7 @@ const VideoChatModal = ({ onClose, isSender }) =>
                                 <p>Incoming call...</p>
                                 <div className='incoming-call-buttons'>
                                     <button 
-                                        className="control-button answer-call" 
+                                        className="control-button answer-call"
                                         onClick={() => answerCall(stream, receiverVideoRef)}>
                                         <IoCall />
                                     </button> 
@@ -155,8 +194,8 @@ const VideoChatModal = ({ onClose, isSender }) =>
                             </div>
 
                         ) : <div className='call-buttons'>
-                                <button className="control-button">
-                                    <TbScreenShare />
+                                <button className="control-button" onClick={handleScreenSharing}>
+                                    {isScreenSharing ? <TbScreenShareOff/> : <TbScreenShare/>}
                                 </button>
                                 <button className="control-button end-call" onClick={handleEndCall}>
                                     <FcEndCall />
