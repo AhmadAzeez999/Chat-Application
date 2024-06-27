@@ -72,3 +72,8 @@
     border-radius: 50%;
     background-color: rgb(0, 221, 0);
 }
+
+.no-users-found
+{
+    text-align: center;
+}

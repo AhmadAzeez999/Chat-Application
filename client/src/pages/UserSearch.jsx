@@ -5,7 +5,8 @@ import './css/UserSearch.css';
 import { FaSearch } from "react-icons/fa";
 import avatar from "../assets/avatar.svg";
 
-const UserSearch = () => {
+const UserSearch = () => 
+{
     const { user } = useContext(AuthContext);
     const { potentialChats, createChat, onlineUsers } = useContext(ChatContext);
     const [searchTerm, setSearchTerm] = useState("");
@@ -27,32 +28,30 @@ const UserSearch = () => {
                 <FaSearch className="search-icon" />
             </div>
             <div className="potential-chats">
-                {filteredChats && filteredChats.map((u, index) => {
-                    return (
+                {filteredChats.length > 0 ? (
+                    filteredChats.map((u, index) => (
                         <div 
                             className="single-user" 
                             key={index} 
-                            onClick={() => 
-                                {
-                                    createChat(user._id, u._id);
-                                    
-                                }
-                            }
+                            onClick={() => createChat(user._id, u._id)}
                         >
                             <div className="user-info">
-                                <img src={avatar} alt="Avater" height="35px"/>
+                                <img src={avatar} alt="Avatar" height="35px"/>
                                 <p>{u.name}</p>
                             </div>
                             <span 
-                                className={
-                                    onlineUsers?.some((user) => user?.userId === u?._id)
+                                className=
+                                {
+                                    onlineUsers?.some((onlineUser) => onlineUser?.userId === u?._id)
                                     ? "user-online" : ""
                                 }
                             >
                             </span>
                         </div>
-                    )
-                })}
+                    ))
+                ) : (
+                    <p className="no-users-found">User not found</p>
+                )}
             </div>
         </div>
     );
