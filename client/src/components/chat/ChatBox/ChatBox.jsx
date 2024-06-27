@@ -133,7 +133,7 @@ const ChatBox = () =>
             return;
         }
         const results = messages.filter(message =>
-            message.text.toLowerCase().includes(event.target.value.toLowerCase())
+            message?.text?.toLowerCase().includes(event.target.value.toLowerCase())
         );
         setSearchResults(results);
     };
