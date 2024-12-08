@@ -1,0 +1,79 @@
+.user-search-page 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.search-bar-container 
+{
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.search-bar 
+{
+    width: 92%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    padding-right: 40px;
+}
+
+.search-icon 
+{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 20px;
+}
+
+.potential-chats 
+{
+    width: 100%;
+    max-width: 600px;
+}
+
+.single-user 
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.single-user .user-info
+{
+    display: flex;
+    gap: 10px;
+}
+
+.single-user:hover 
+{
+    background-color: #3a3a3a;
+}
+
+.single-user .user-online 
+{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(0, 221, 0);
+}
+
+.no-users-found
+{
+    text-align: center;
+}

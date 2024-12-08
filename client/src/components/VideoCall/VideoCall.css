@@ -1,0 +1,13 @@
+.video-call 
+{
+    position: relative;
+    background-color: black;
+}
+
+.video-call video 
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}

@@ -1,0 +1,119 @@
+.voice-chat-modal-overlay 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.voice-chat-modal 
+{
+    background-color: #1a1a1a;
+    width: 80%;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal-header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modal-header h3 
+{
+    margin: 0;
+}
+
+.close-button 
+{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+}
+
+.close-button:hover 
+{
+    color: red;
+}
+
+.modal-body 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.modal-body p
+{
+    padding-right: 20px;
+}
+
+.modal-footer 
+{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.modal-footer .control-button 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 20px;
+    border: 1px solid #0056b3;
+}
+
+.modal-footer .control-button:hover 
+{
+    background-color: #0057b369;
+}
+
+.modal-footer .end-call 
+{
+    border: 1px solid red;
+}
+
+.modal-footer .answer-call
+{
+    border: 1px solid rgb(3, 199, 82);
+}
+
+.modal-footer .answer-call:hover
+{
+    background-color:rgba(3, 199, 81, 0.336);
+}
+
+.modal-footer .end-call:hover 
+{
+    background-color: #c8233337;
+}
+
+.modal-footer .call-buttons
+{
+    display: flex;
+    justify-content: space-around;
+    gap: 80px;
+}
